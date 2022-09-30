@@ -6,10 +6,7 @@ import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
@@ -21,9 +18,15 @@ public class AopController {
 
     @GetMapping("/aop")
     @ResponseBody
-    public String check(){
+    public String check(@RequestParam(value = "val", required = false) String insert){
+        String realInsert = "";
+        if (insert == null){
+            realInsert = "goodBye";
+        }else{
+            realInsert = insert;
+        }
         log.info("what??");
-        String targetValue =  aopService.getDB("goodBye");
+        String targetValue =  aopService.getDB(realInsert);
         return targetValue;
     }
 }
